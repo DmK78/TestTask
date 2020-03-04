@@ -34,7 +34,7 @@ public class QuoteDetailsPresenter {
     }
 
     public void loadQuote(int id){
-        networkService.getQuoteDetails(id);
+        networkService.getQuote(id);
 
     }
 }

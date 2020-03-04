@@ -3,7 +3,6 @@ package com.mdk78.testtask.quotes_list;
 import com.mdk78.testtask.App;
 import com.mdk78.testtask.model.Quote;
 import com.mdk78.testtask.network.NetworkService;
-import com.mdk78.testtask.quote_details.QuoteDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +10,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class QuotesListPresenter {
+public class QuotesListPresenter implements IPresenter {
     public static String QUOTE_ID = "quote_id";
     private int offset = 1;
-    private QuotesListActivity view;
+    private IView view;
     @Inject
     NetworkService networkService;
     private List<Quote> quotes = new ArrayList<>();
@@ -28,14 +27,14 @@ public class QuotesListPresenter {
                 if (quotes.size() == 0) {
                     isAllQuotesLoaded = true;
                 } else {
-                    view.addDataToAdapter(quotes);
+                    view.render(quotes);
                 }
             }
         });
     }
 
-    public void attachView(QuotesListActivity quotesListActivity) {
-        this.view = quotesListActivity;
+    public void attachView(IView quotesListView) {
+        this.view = quotesListView;
     }
 
     public void detachView() {
@@ -54,16 +53,16 @@ public class QuotesListPresenter {
     }
 
 
-    public void onQuoteClicked(Quote quote) {
-        view.startActivity(QuoteDetailsActivity.create(view.getApplicationContext(),quote.id));
 
-    }
-
-    public void onReachEndOfListQuotes() {
+    @Override
+    public void onReachEndOfList() {
         if (!isAllQuotesLoaded) {
             view.showToast("Loading...");
             setPageUp();
             getQuotesList();
         }
+
     }
+
+
 }

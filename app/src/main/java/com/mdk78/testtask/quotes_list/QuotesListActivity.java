@@ -10,13 +10,14 @@ import com.mdk78.testtask.App;
 
 import com.mdk78.testtask.databinding.ActivityQuotesListBinding;
 import com.mdk78.testtask.model.Quote;
+import com.mdk78.testtask.quote_details.QuoteDetailsActivity;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 
-public class QuotesListActivity extends AppCompatActivity {
+public class QuotesListActivity extends AppCompatActivity implements IView {
     @Inject
     QuotesListPresenter presenter;
     private ActivityQuotesListBinding binding;
@@ -33,24 +34,30 @@ public class QuotesListActivity extends AppCompatActivity {
         binding.recyclerQuotes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerQuotes.setAdapter(adapter);
         presenter.getQuotesList();
-        adapter.setOnClickListener(quote -> presenter.onQuoteClicked(quote));
+        adapter.setOnClickListener(quote -> startActivity(QuoteDetailsActivity.create(this, quote.id)));
         adapter.setOnReachOfEndListener(() -> {
-            presenter.onReachEndOfListQuotes();
+            presenter.onReachEndOfList();
         });
 
     }
 
+    @Override
     public void showToast(String s) {
         Toast.makeText(QuotesListActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public void addDataToAdapter(List<Quote> quotes) {
+    /*public void addDataToAdapter(List<Quote> quotes) {
         adapter.addData(quotes);
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+    @Override
+    public void render(List<Quote> quotes) {
+        adapter.addData(quotes);
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 
 import com.mdk78.testtask.model.Quote;
+import com.mdk78.testtask.quotes_list.IModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NetworkService {
+public class NetworkService implements IModel {
     private Retrofit mRetrofit;
     private static String BASE_URL = "https://oico.app/";
     private QuotesListLoadListener quotesListLoadListener;
@@ -34,15 +35,15 @@ public class NetworkService {
                 .build();
     }
 
-    public void setQuotesListLoadListener(QuotesListLoadListener quoteLoadListener){
+    public void setQuotesListLoadListener(QuotesListLoadListener quoteLoadListener) {
         this.quotesListLoadListener = quoteLoadListener;
     }
 
-    public void setQuoteDetailsLoadListener(QuoteDetailsLoadListener quoteDetailsLoadListener){
+    public void setQuoteDetailsLoadListener(QuoteDetailsLoadListener quoteDetailsLoadListener) {
         this.quoteDetailsLoadListener = quoteDetailsLoadListener;
     }
 
-
+    @Override
     public void getQuotesList(int limit, int offset) {
 
         getJSONApi().getQuotesList(limit, offset)
@@ -62,8 +63,8 @@ public class NetworkService {
                 });
     }
 
-    public void getQuoteDetails(int id) {
-
+    @Override
+    public void getQuote(int id) {
         getJSONApi().getQuoteDetails(id)
                 .enqueue(new Callback<Quote>() {
 
@@ -81,14 +82,18 @@ public class NetworkService {
                 });
     }
 
+
+
     public JsonPlaceHolderApi getJSONApi() {
         return mRetrofit.create(JsonPlaceHolderApi.class);
     }
 
+
     public interface QuotesListLoadListener {
         void onQuotesListLoaded(List<Quote> quotes);
     }
-    public interface QuoteDetailsLoadListener{
+
+    public interface QuoteDetailsLoadListener {
         void onQuoteLoaded(Quote quote);
     }
 }
