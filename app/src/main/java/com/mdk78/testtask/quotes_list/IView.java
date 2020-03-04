@@ -8,6 +8,7 @@ public interface IView {
 
         void render(List<Quote> quotes);
         void showToast(String s);
+        void setAdapterData(List<Quote> quotes);
 
 
 

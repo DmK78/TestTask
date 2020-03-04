@@ -21,14 +21,13 @@ public class QuotesListPresenter implements IPresenter {
 
     public QuotesListPresenter() {
         App.getComponent().injectTo(this);
-        networkService.setQuotesListLoadListener(new NetworkService.QuotesListLoadListener() {
-            @Override
-            public void onQuotesListLoaded(List<Quote> quotes) {
-                if (quotes.size() == 0) {
-                    isAllQuotesLoaded = true;
-                } else {
-                    view.render(quotes);
-                }
+        networkService.setQuotesListLoadListener(quotes -> {
+            if (quotes.size() == 0) {
+                isAllQuotesLoaded = true;
+            } else {
+                QuotesListPresenter.this.quotes.addAll(quotes);
+                view.setAdapterData(quotes);
+                view.render(QuotesListPresenter.this.quotes);
             }
         });
     }
@@ -46,12 +45,11 @@ public class QuotesListPresenter implements IPresenter {
     }
 
     public void getQuotesList() {
-        if (this.quotes.size() == 0 || !isAllQuotesLoaded) {
+        if (!isAllQuotesLoaded) {
             networkService.getQuotesList(10, offset);
+        } else view.setAdapterData(this.quotes);
 
-        }
     }
-
 
 
     @Override

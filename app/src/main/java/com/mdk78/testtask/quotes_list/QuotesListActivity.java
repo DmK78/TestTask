@@ -56,8 +56,13 @@ public class QuotesListActivity extends AppCompatActivity implements IView {
         presenter.detachView();
     }
 
+    public void setAdapterData(List<Quote>quotes){
+        adapter.addData(quotes);
+    }
+
     @Override
     public void render(List<Quote> quotes) {
-        adapter.addData(quotes);
+
+        //adapter.addData(quotes);
     }
 }
