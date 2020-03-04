@@ -1,4 +1,4 @@
-package com.mdk78.testtask.quotes_list;
+package com.mdk78.testtask.network;
 
 import com.mdk78.testtask.model.Quote;
 

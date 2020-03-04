@@ -4,7 +4,6 @@ import android.util.Log;
 
 
 import com.mdk78.testtask.model.Quote;
-import com.mdk78.testtask.quotes_list.IModel;
 
 import java.util.List;
 import java.util.Objects;

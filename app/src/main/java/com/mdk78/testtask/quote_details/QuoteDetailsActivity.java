@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-public class QuoteDetailsActivity extends AppCompatActivity {
+public class QuoteDetailsActivity extends AppCompatActivity implements IView{
     @Inject
     QuoteDetailsPresenter presenter;
     private ActivityQuoteDetailsBinding binding;

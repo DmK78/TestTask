@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class QuoteDetailsPresenter {
+public class QuoteDetailsPresenter implements IPresenter{
     @Inject
     NetworkService networkService;
     QuoteDetailsActivity view;
@@ -33,6 +33,7 @@ public class QuoteDetailsPresenter {
         this.view = null;
     }
 
+    @Override
     public void loadQuote(int id){
         networkService.getQuote(id);
 
