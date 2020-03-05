@@ -1,5 +1,6 @@
 package com.mdk78.testtask.quotes_list;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
         final Quote quote = quotes.get(i);
         holder.textViewQuote.setText(quote.text);
         if(quote.createdBy==0){
-            holder.textViewQuote.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-        } else holder.textViewQuote.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            holder.textViewQuote.setGravity(Gravity.START);
+        } else {
+            holder.textViewQuote.setGravity(Gravity.END);
+        }
         holder.view.setOnClickListener(v -> onQuotesClickListener.onQuoteClick(quote));
     }
 
