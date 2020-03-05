@@ -45,7 +45,7 @@ public class QuotesListPresenter implements IPresenter {
     }
 
     public void getQuotesList() {
-        if (!isAllQuotesLoaded) {
+        if (!isAllQuotesLoaded || this.quotes.size()==0) {
             networkService.getQuotesList(10, offset);
         } else view.setAdapterData(this.quotes);
 

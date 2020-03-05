@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import com.mdk78.testtask.App;
@@ -22,10 +23,14 @@ public class QuotesListActivity extends AppCompatActivity implements IView {
     QuotesListPresenter presenter;
     private ActivityQuotesListBinding binding;
     private QuotesAdapter adapter;
+    private Parcelable listState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null){
+            listState=savedInstanceState.getParcelable("ListState");
+        }
         App.getComponent().injectTo(this);
         binding = ActivityQuotesListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -33,11 +38,18 @@ public class QuotesListActivity extends AppCompatActivity implements IView {
         adapter = new QuotesAdapter();
         binding.recyclerQuotes.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.recyclerQuotes.setAdapter(adapter);
+        binding.recyclerQuotes.getLayoutManager().onRestoreInstanceState(listState);
         presenter.getQuotesList();
         adapter.setOnClickListener(quote -> startActivity(QuoteDetailsActivity.create(this, quote.id)));
         adapter.setOnReachOfEndListener(() -> {
             presenter.onReachEndOfList();
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("ListState", binding.recyclerQuotes.getLayoutManager().onSaveInstanceState());
 
     }
 

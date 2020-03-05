@@ -40,9 +40,9 @@ public class QuoteDetailsActivity extends AppCompatActivity implements IView{
     }
 
     public void renderView(Quote quote) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss_dd:MM:yyyy", Locale.getDefault());
-        String currentDateAndTime = sdf.format(new Date());
-        binding.tvQuoteDetCreated.setText(currentDateAndTime.toString());
+        /*SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss_dd:MM:yyyy", Locale.getDefault());
+        String currentDateAndTime = sdf.format(new Date());*/
+        binding.tvQuoteDetCreated.setText(quote.getCreated());
         binding.tvQuoteDetText.setText(quote.text);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, quote.tagList) {
             @NonNull

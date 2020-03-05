@@ -20,6 +20,8 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.QuotesHold
     private OnReachOfEndListener onReachOfEndListener;
     private OnQuotesClickListener onQuotesClickListener;
 
+
+
     public void setOnClickListener(OnQuotesClickListener onQuotesClickListener) {
         this.onQuotesClickListener = onQuotesClickListener;
     }
